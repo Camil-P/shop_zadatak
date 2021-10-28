@@ -1,6 +1,6 @@
 import express from 'express';
 
-export default class AppRouter{
+export class AppRouter{
     private static instance : express.Router;
 
     static getInstance(): express.Router{

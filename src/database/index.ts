@@ -6,11 +6,9 @@ function connect(){
 
     return mongoose
         .connect(dbUrl)
-        .then(() => {
-            console.log("Database connected.");
-        })
-        .catch((error) => {
-            console.error("Database error: " + error);
+        .then(() => console.log("Database connected."))
+        .catch((err) => {
+            console.log("Database error: " + err.message);
             process.exit(1);
         });
 }
