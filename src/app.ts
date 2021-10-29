@@ -4,6 +4,7 @@ import config from '../config';
 import connect from './database';
 
 import('./controller/user.controller');
+import('./controller/session.controller');
 
 const port = config.port as number;
 const host = config.host as string;

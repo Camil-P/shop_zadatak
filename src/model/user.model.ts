@@ -4,9 +4,12 @@ import bcrypt from 'bcrypt';
 export interface UserDocument extends mongoose.Document{
     email: string;
     password: string;
+    createdAt: Date;
+    updatedAt: Date;
+    comparePasswords(candidatePassword: string): Promise<boolean>;
 }
 
-const UserSchema = new mongoose.Schema(
+const userSchema = new mongoose.Schema(
     {
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true }
@@ -14,7 +17,7 @@ const UserSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-UserSchema.pre('save', async function(next){
+userSchema.pre('save', async function(next){
     let user = this as UserDocument;
 
     if(!user.isModified('password')) return next();
@@ -28,6 +31,12 @@ UserSchema.pre('save', async function(next){
     return next();
 })
 
-const User = mongoose.model<UserDocument>('User', UserSchema);
+userSchema.methods.comparePasswords = async function (candidatePassword: string){
+    const user = this as UserDocument;
+
+    return bcrypt.compare(candidatePassword, user.password).catch((err) => false);
+}
+
+const User = mongoose.model<UserDocument>('User', userSchema);
 
 export default User;
