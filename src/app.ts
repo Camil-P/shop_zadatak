@@ -6,6 +6,7 @@ import { desirializeUser } from './middleware';
 
 import('./controller/user.controller');
 import('./controller/session.controller');
+import('./controller/shoppingList.controller');
 
 const port = config.port as number;
 const host = config.host as string;
