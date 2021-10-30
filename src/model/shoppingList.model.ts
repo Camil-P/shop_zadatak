@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import { UserDocument } from "./user.model";
 
 export interface ItemDocument extends mongoose.Document{
-    name: string,
+    itemName: string,
     quantity: number
 }
 
@@ -14,7 +14,7 @@ export interface ShoppingListDocument extends mongoose.Document{
 
 const item = new mongoose.Schema(
     {
-        name: { type: String, required: true, unique: true},
+        itemName: { type: String, required: true},
         quantity: { type: Number, default: 0}
     }
 );

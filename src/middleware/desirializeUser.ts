@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { reissueAccessToken } from "../service/session.service.";
+import { findUser } from "../service/user.service";
 import { decode } from "../utils/jwt.utils";
 
 
@@ -13,7 +14,7 @@ const desirializeUser = async (req: Request, res: Response, next: NextFunction) 
 
     if(decoded){
         // @ts-ignore
-        req.user = decoded;
+        req.user = await findUser(decoded.user);
 
         return next();
     }
@@ -26,7 +27,7 @@ const desirializeUser = async (req: Request, res: Response, next: NextFunction) 
 
             const { decoded } = decode(newAccessToken);
             //@ts-ignore
-            req.user = decoded;
+            req.user = await findUser(decoded.user);
         }
         return next();
     }

@@ -1,6 +1,5 @@
-import { LeanDocument } from "mongoose";
 import config from "../../config";
-import Session, { SessionDocument } from "../model/session.model";
+import Session from "../model/session.model";
 import User, { UserDocument } from "../model/user.model";
 import { decode, sign } from '../utils/jwt.utils';
 
@@ -11,9 +10,9 @@ export async function createSession(userId: UserDocument['_id'], userAgent: stri
 }
 
 export function createAccessToken({ user, session }: any) {
-    
+
     const accessToken = sign(
-        {...user, session: session._id},
+        { user: user._id, session: session._id},
         {expiresIn: config.accessTokenTtl} // 15 min
     );
     

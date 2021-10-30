@@ -3,6 +3,10 @@ import { DocumentDefinition, FilterQuery, QueryOptions, UpdateQuery } from "mong
 import User, { UserDocument } from "../model/user.model";
 import bcrypt from 'bcrypt';
 
+export async function findUser(userId: UserDocument['id']){
+    return await User.findById(userId);
+}
+
 export async function createUser(userInput: DocumentDefinition<UserDocument>): Promise<UserDocument>{
     try {
         return User.create(userInput);

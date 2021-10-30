@@ -7,8 +7,8 @@ const validate = (schema?: AnySchema) =>
             if(schema) 
             {
                 await schema.validate({ body: req.body, query: req.query, params: req.params }); 
-                return next();
             }
+            return next();
         }
         catch(err){
             console.log(err.message)

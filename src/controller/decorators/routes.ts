@@ -16,5 +16,7 @@ function bindRoutes(method: RouteMethodes){
     }
 }
 
+export const get = bindRoutes(RouteMethodes.get);
 export const post = bindRoutes(RouteMethodes.post);
 export const put = bindRoutes(RouteMethodes.put);
+export const del = bindRoutes(RouteMethodes.del);
