@@ -1,4 +1,4 @@
-import { FilterQuery, QueryOptions } from "mongoose";
+import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 import ShoppingList, { ShoppingListDocument } from "../model/shoppingList.model";
 
 export async function getUsersShoppingLists(query: FilterQuery<ShoppingListDocument>, options: QueryOptions = { lean: true }){
@@ -11,6 +11,15 @@ export async function findShoppingList(query: FilterQuery<ShoppingListDocument>,
 
 export async function createShoppingList(shoppingList: ShoppingListDocument){
     return ShoppingList.create(shoppingList);
+}
+
+export async function updateShoppingList(
+    query: FilterQuery<ShoppingListDocument>,
+    update: UpdateQuery<ShoppingListDocument>,
+    options: QueryOptions)
+    {
+
+        return ShoppingList.findOneAndUpdate(query, update, options);
 }
 
 export async function deleteShoppingList(query: FilterQuery<ShoppingListDocument>){

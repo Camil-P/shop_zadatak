@@ -9,3 +9,13 @@ export const createShoppingListSchema = object({
         }))
     }),
 });
+
+export const updateShoppingListSchema = object({
+    body: object({
+        name: string(),
+        itemList: array().of(object({
+            itemName: string(),
+            quantity: number()
+        }))
+    })
+});

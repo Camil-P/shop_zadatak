@@ -1,11 +1,19 @@
 import { Request, Response } from 'express';
 import { requiresUser } from "../middleware";
-import { createShoppingListSchema } from "../schema/shoppingList.schema";
-import { createShoppingList, deleteShoppingList, getUsersShoppingLists } from '../service/shopingList.service';
+import { createShoppingListSchema, updateShoppingListSchema } from "../schema/shoppingList.schema";
+import { createShoppingList, deleteShoppingList, getUsersShoppingLists, updateShoppingList } from '../service/shopingList.service';
 import { controller, get, post, put, del, use, validateSchema } from "./decorators";
 
 @controller('lists')
 export class ShoppingList{
+
+    @use(requiresUser)
+    @get()
+    async getShoppingListsHandler(req: Request, res: Response){
+        //@ts-ignore
+        const shoppingLists = await getUsersShoppingLists({ user: req.user._id });
+        return res.send(shoppingLists);
+    }
 
     @use(requiresUser)
     @validateSchema(createShoppingListSchema)
@@ -38,10 +46,12 @@ export class ShoppingList{
     }
 
     @use(requiresUser)
-    @get()
-    async getShoppingListsHandler(req: Request, res: Response){
+    @validateSchema(updateShoppingListSchema)
+    @put(':id')
+    async updateShoppingListHandler(req: Request, res: Response){
         //@ts-ignore
-        const shoppingLists = await getUsersShoppingLists({ user: req.user._id });
-        return res.send(shoppingLists);
+        const updatedShoppingList = await updateShoppingList({ _id: req.params.id, user: req.user._id }, req.body, { new: true })
+        
+        res.send(updatedShoppingList);
     }
 }
