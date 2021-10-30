@@ -1,6 +1,7 @@
 import { omit } from "lodash";
-import { DocumentDefinition } from "mongoose";
+import { DocumentDefinition, FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
 import User, { UserDocument } from "../model/user.model";
+import bcrypt from 'bcrypt';
 
 export async function createUser(userInput: DocumentDefinition<UserDocument>): Promise<UserDocument>{
     try {
@@ -20,4 +21,19 @@ export async function validatePassword({ email, password }: { email: UserDocumen
     if (!isValid) { return false; }
 
     return omit(user.toJSON(), 'password');
+}
+
+export async function updatePassword(query: FilterQuery<UserDocument>, update: UpdateQuery<UserDocument>, options: QueryOptions) {
+    //@ts-ignore
+    const user = await User.findOneAndUpdate(query, update, options);
+
+    if(!user) { return false; }
+    return user;
+}
+
+export async function hashUpdatedPassword(password: string){
+    const salt = await bcrypt.genSalt();
+    const hash = bcrypt.hashSync(password, salt);
+
+    return hash;
 }

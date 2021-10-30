@@ -1,7 +1,8 @@
-import express, { Request, Response } from 'express';
-import { AppRouter } from './AppRouter';
 import config from '../config';
 import connect from './database';
+import express from 'express';
+import { AppRouter } from './AppRouter';
+import { desirializeUser } from './middleware';
 
 import('./controller/user.controller');
 import('./controller/session.controller');
@@ -11,6 +12,7 @@ const host = config.host as string;
 
 const app = express();
 
+app.use(desirializeUser);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(AppRouter.getInstance());   

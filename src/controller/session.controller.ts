@@ -13,7 +13,7 @@ export class SessionController{
     async createUserSessionHandler(req: Request, res: Response) {
         const user = await validatePassword(req.body);
         if (!user) {
-            return res.status(401).send('Invalid username or password');
+            return res.status(404).send('Invalid username or password');
         }
 
         const session = await createSession(user._id, req.headers['user-agent'] || '');

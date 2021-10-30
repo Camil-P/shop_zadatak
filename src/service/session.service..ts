@@ -1,8 +1,8 @@
 import { LeanDocument } from "mongoose";
 import config from "../../config";
 import Session, { SessionDocument } from "../model/session.model";
-import { UserDocument } from "../model/user.model";
-import { sign } from '../utils/jwt.utils';
+import User, { UserDocument } from "../model/user.model";
+import { decode, sign } from '../utils/jwt.utils';
 
 export async function createSession(userId: UserDocument['_id'], userAgent: string){
     const session = await Session.create({ user: userId, userAgent: userAgent });
@@ -11,8 +11,6 @@ export async function createSession(userId: UserDocument['_id'], userAgent: stri
 }
 
 export function createAccessToken({ user, session }: any) {
-    console.log(user);
-    console.log(session);
     
     const accessToken = sign(
         {...user, session: session._id},
@@ -24,4 +22,18 @@ export function createAccessToken({ user, session }: any) {
 
 export function createRefreshToken(session: any){
     return sign(session, {expiresIn: config.refreshTokenTtl}); // 1 year
+}
+
+export async function reissueAccessToken(refreshToken: string){
+    const { decoded } = decode(refreshToken);
+    if(!decoded) { return false; }
+
+    const session = await Session.findOne({ _id: decoded._id});
+    if(!session) { return false; }
+
+    const user = await User.findOne({ _id: session.user });
+    if(!user) { return false; }
+
+    const accessToken = createAccessToken({ user, session });
+    return accessToken;
 }

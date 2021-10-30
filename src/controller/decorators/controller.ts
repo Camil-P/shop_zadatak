@@ -1,9 +1,10 @@
 import 'reflect-metadata';
 import express from 'express';
 import { AppRouter } from '../../AppRouter';
-import validateRequest from '../../middleware/validateRequest';
+import { validateRequest } from '../../middleware';
 import { MetadataKeys } from './enum/MetadataKey';
 import { RouteMethodes } from './enum/RouteMethodes';
+
 export function controller(controllerPath: string): Function{
     return function(target: Function, key: string, desc: PropertyDescriptor){
         
