@@ -5,7 +5,7 @@ import { decode } from "../utils/jwt.utils";
 
 
 const desirializeUser = async (req: Request, res: Response, next: NextFunction) => {
-    const accessToken = (req.headers['authorization'] || "").replace(/^Bearer\s/, "");
+    const accessToken = req.headers?.authorization?.replace(/^Bearer\s/, "");
     const refreshToken = (req.headers['x-refresh'] || "").toString();
 
     if(!accessToken) { return next(); }

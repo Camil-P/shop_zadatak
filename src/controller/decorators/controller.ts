@@ -17,8 +17,6 @@ export function controller(controllerPath: string): Function{
             const path = Reflect.getMetadata(MetadataKeys.path, target.prototype, key) || '';
             const validationSchema = Reflect.getMetadata(MetadataKeys.validator, target.prototype, key);
             const middlewares = Reflect.getMetadata(MetadataKeys.middleware, target.prototype, key) || [];
-            
-            console.log(`/api/${controllerPath}/${path} - ` + method);
 
             app[method](`/api/${controllerPath}/${path}`, [...middlewares, validateRequest(validationSchema)], routeHandler);
         }

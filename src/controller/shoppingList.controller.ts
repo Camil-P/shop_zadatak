@@ -1,11 +1,21 @@
 import { Request, Response } from 'express';
 import { requiresUser } from "../middleware";
 import { createShoppingListSchema, updateShoppingListSchema } from "../schema/shoppingList.schema";
-import { createShoppingList, deleteShoppingList, getUsersShoppingLists, updateShoppingList } from '../service/shopingList.service';
+import { getItemReport, createShoppingList, deleteShoppingList, getUsersShoppingLists, updateShoppingList } from '../service/shopingList.service';
 import { controller, get, post, put, del, use, validateSchema } from "./decorators";
 
 @controller('lists')
 export class ShoppingList{
+
+    @use(requiresUser)
+    @get('items')
+    async getItemReport(req: Request, res: Response){
+        const from = new Date(req.query.from?.toString() || 0);
+        const to = new Date(req.query.to?.toString() || new Date());
+
+        const itemList = await getItemReport({ from, to });
+        return res.send(itemList);
+    }
 
     @use(requiresUser)
     @get()
