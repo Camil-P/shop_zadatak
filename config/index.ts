@@ -1,7 +1,7 @@
 export default {
-    port: 1337,
+    port: 3000,
     host: "localhost",
-    dbUrl: "mongodb://localhost:27017/shop",
+    dbUrl: "mongodb://mongo:27017/shop",
     privateKey: "shopZadatak",
     accessTokenTtl: '10m',
     refreshTokenTtl: '1y',
