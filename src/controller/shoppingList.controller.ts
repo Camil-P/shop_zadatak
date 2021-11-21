@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { requiresUser } from "../middleware";
+import { cleanCache, requiresUser } from "../middleware";
 import { createShoppingListSchema, updateShoppingListSchema } from "../schema/shoppingList.schema";
 import { getItemReport, createShoppingList, deleteShoppingList, getUsersShoppingLists, updateShoppingList } from '../service/shopingList.service';
 import { controller, get, post, put, del, use, validateSchema } from "./decorators";
@@ -20,12 +20,13 @@ export class ShoppingList{
     @use(requiresUser)
     @get()
     async getShoppingListsHandler(req: Request, res: Response){
-        //@ts-ignore
-        const shoppingLists = await getUsersShoppingLists({ user: req.user._id });
-        return res.send(shoppingLists);
+        // @ts-ignore
+        const shoppingLists = await getUsersShoppingLists({ user: req.user.id });
+        res.send(shoppingLists);
     }
 
     @use(requiresUser)
+    @use(cleanCache)
     @validateSchema(createShoppingListSchema)
     @post()
     async createShopingListHandler(req: Request, res: Response){
@@ -44,24 +45,36 @@ export class ShoppingList{
     }
 
     @use(requiresUser)
-    @del(':name')
+    @use(cleanCache)
+    @del(':id')
     async deleteShopingListHandler(req: Request, res: Response){
-        const name = req.params.name;
-
-        //@ts-ignore
-        const deleteConfirmation = await deleteShoppingList({ name, user: req.user._id });
-
-        if(deleteConfirmation) { return res.send('Item successfully deleted'); }
-        return res.send('No such items to delete');
+        try {
+            const _id = req.params.id;
+    
+            //@ts-ignore
+            const deleteConfirmation = await deleteShoppingList({ _id, user: req.user._id });
+    
+            res.send(deleteConfirmation ? 'Item successfully deleted' : 'No such item exists');
+        } 
+        catch (err) {
+            return res.status(400).send(err.message);
+        }
     }
 
     @use(requiresUser)
+    @use(cleanCache)
     @validateSchema(updateShoppingListSchema)
     @put(':id')
     async updateShoppingListHandler(req: Request, res: Response){
-        //@ts-ignore
-        const updatedShoppingList = await updateShoppingList({ _id: req.params.id, user: req.user._id }, req.body, { new: true })
-        
-        res.send(updatedShoppingList);
+        try {
+            //@ts-ignore
+            const userId = req.user._id;
+
+            const updatedShoppingList = await updateShoppingList({ _id: req.params.id, user: userId }, req.body, { new: true })
+            res.send(updatedShoppingList);            
+        } 
+        catch (err) {
+            return res.status(400).send(err.message);
+        }
     }
 }

@@ -8,3 +8,9 @@ export function use(middleware: RequestHandler){
         Reflect.defineMetadata(MetadataKeys.middleware, [ ...middlewares, middleware ], target, key);
     }
 }
+
+export function requires(middleware: RequestHandler){
+    return function(target: any, key: string, desc: PropertyDescriptor){
+        
+    }
+}

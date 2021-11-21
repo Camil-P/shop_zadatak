@@ -28,7 +28,8 @@ export async function getItemReport({ from, to }: { from: Date, to: Date }){
 }
 
 export async function getUsersShoppingLists(query: FilterQuery<ShoppingListDocument>, options: QueryOptions = { lean: true }){
-    return ShoppingList.find(query, {}, options);
+    //@ts-ignore
+    return ShoppingList.find(query, {}, options).cache({ key: query.user });
 }
 
 export async function findShoppingList(query: FilterQuery<ShoppingListDocument>, options: QueryOptions = { lean: true }){
@@ -43,8 +44,7 @@ export async function updateShoppingList(
     query: FilterQuery<ShoppingListDocument>,
     update: UpdateQuery<ShoppingListDocument>,
     options: QueryOptions)
-    {
-
+    {   
         return ShoppingList.findOneAndUpdate(query, update, options);
 }
 

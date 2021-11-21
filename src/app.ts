@@ -1,4 +1,4 @@
-import config from '../config';
+import config from './config';
 import connect from './database';
 import express from 'express';
 import { AppRouter } from './AppRouter';

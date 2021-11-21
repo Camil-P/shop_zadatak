@@ -1,4 +1,4 @@
-import config from "../../config";
+import config from "../config";
 import Session from "../model/session.model";
 import User, { UserDocument } from "../model/user.model";
 import { decode, sign } from '../utils/jwt.utils';
