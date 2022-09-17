@@ -125,33 +125,33 @@ The REST API to the example app is described below.
 
 ### Response
 
-[
-    {
-        "_id": "6325c3af0d2f70006f4d4b60",
-        "user": "6323491258560431664d5ba4",
-        "name": "created list",
-        "itemList": [
-            {
-                "itemName": "item1",
-                "quantity": 1,
-                "_id": "6325c3af0d2f70006f4d4b61"
-            },
-            {
-                "itemName": "item2",
-                "quantity": 2,
-                "_id": "6325c3af0d2f70006f4d4b62"
-            },
-            {
-                "itemName": "item3",
-                "quantity": 60,
-                "_id": "6325c3af0d2f70006f4d4b63"
-            }
-        ],
-        "createdAt": "2022-09-17T12:55:11.731Z",
-        "updatedAt": "2022-09-17T12:55:11.731Z",
-        "__v": 0
-    }
-]
+    [
+        {
+            "_id": "6325c3af0d2f70006f4d4b60",
+            "user": "6323491258560431664d5ba4",
+            "name": "created list",
+            "itemList": [
+                {
+                    "itemName": "item1",
+                    "quantity": 1,
+                    "_id": "6325c3af0d2f70006f4d4b61"
+                },
+                {
+                    "itemName": "item2",
+                    "quantity": 2,
+                    "_id": "6325c3af0d2f70006f4d4b62"
+                },
+                {
+                    "itemName": "item3",
+                    "quantity": 60,
+                    "_id": "6325c3af0d2f70006f4d4b63"
+                }
+            ],
+            "createdAt": "2022-09-17T12:55:11.731Z",
+            "updatedAt": "2022-09-17T12:55:11.731Z",
+            "__v": 0
+        }
+    ]
 
 ## Get list items
 
@@ -170,29 +170,29 @@ The REST API to the example app is described below.
 
 ### Response
 
-[
-    {
-        "quantity": 4,
-        "itemName": "item1"
-    },
-    {
-        "quantity": 3,
-        "itemName": "item2"
-    },
-    {
-        "quantity": 2,
-        "itemName": "item3"
-    },
-    {
-        "quantity": 60,
-        "itemName": "item4"
-    },
-    {
-        "quantity": 2,
-        "itemName": "item5"
-    },
-    {
-        "quantity": 2,
-        "itemName": "item6"
-    }
-]
+    [
+        {
+            "quantity": 4,
+            "itemName": "item1"
+        },
+        {
+            "quantity": 3,
+            "itemName": "item2"
+        },
+        {
+            "quantity": 2,
+            "itemName": "item3"
+        },
+        {
+            "quantity": 60,
+            "itemName": "item4"
+        },
+        {
+            "quantity": 2,
+            "itemName": "item5"
+        },
+        {
+            "quantity": 2,
+            "itemName": "item6"
+        }
+    ]
