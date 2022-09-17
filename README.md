@@ -23,7 +23,7 @@ The REST API to the example app is described below.
 ### JSON Body:
 
     {
-        "name":"string",
+        "email":"string",
         "password":"string"
     }
 
@@ -44,7 +44,7 @@ The REST API to the example app is described below.
 ### JSON Body:
 
     {
-        "name":"string",
+        "email":"string",
         "password":"string"
     }
 
