@@ -61,8 +61,8 @@ The REST API to the example app is described below.
 `POST http://localhost:8000/api/lists`
 ### Request header:
 
-    Authorization: "Bearer jwtAccessToken"
-    x-refresh: "refreshToken"
+    Authorization: Bearer jwtAccessToken
+    x-refresh: refreshToken
 
 ### Request body: 
 
